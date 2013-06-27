@@ -1,0 +1,35 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Accuracy Project Home Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h1>Accuracy Project</h1>
+        <p>The purpose of this project is to help hunters/shooters improve their accuracy.<br>
+            Users will be able to enter information associated with shooting trips
+            including group sizes, pictures, and number of shots fired.<br>
+            This information will allow the web site to remind users when their bow strings need replaced,
+            and when their gun needs cleaned.<br>
+            Users will be able to view graphs of average group sizes over time to find out whether or not they are improving.                       
+        </p>
+        <form name="size input form" action="response.jsp">           
+            Enter the group size:
+            <input type="text" name="size" />
+            <input type="submit" value="Add Group" /> <br>
+        </form>
+        
+        <form name="Calculate group size" action="response.jsp">
+            <br><h3>OR</h3><br>
+            Length from outer edges of the farthest two shots:
+            <input type="text" name="lengthFromOuterEdges" /> <br>
+            Caliber of the bullet, or diameter of the arrow:
+            <input type="text" name="caliber" />
+            <input type="submit" value="Add Group" />
+        </form>
+    </body>
+</html>
