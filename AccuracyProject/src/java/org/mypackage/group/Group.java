@@ -8,17 +8,15 @@ package org.mypackage.group;
  *
  * @author Wes
  */
-public class Group {
+public class Group implements java.io.Serializable{
     private double size;
-    private double lengthFromOuterEdges;
-    private double caliber;
+    private int shots;
     
     
     public Group()
     {
         size = 0.0; 
-        lengthFromOuterEdges = 0.0;
-        caliber = 0.0;
+        shots = 0;
     }
     
     /**
@@ -27,15 +25,20 @@ public class Group {
      * @param caliber
      * @return the calculated group size
      */
-    public double calculateGroupSize()
+    /*public Group calculateGroupSize(double lengthFromOuterEdges, double caliber, double size, int shots)
     {
         if(size == 0.0)
         {
-            size = lengthFromOuterEdges - caliber;
+            this.size = lengthFromOuterEdges - caliber;
+        }
+        else{
+            this.size = size;
         }
         
-        return size;        
-    }
+        this.shots = shots;
+        
+        return this;     
+    }*/
 
     /**
      * @return the size
@@ -52,31 +55,17 @@ public class Group {
     }
 
     /**
-     * @return the lengthFromOuterEdges
+     * @return the shots
      */
-    public double getLengthFromOuterEdges() {
-        return lengthFromOuterEdges;
+    public int getShots() {
+        return shots;
     }
 
     /**
-     * @param lengthFromOuterEdges the lengthFromOuterEdges to set
+     * @param shots the shots to set
      */
-    public void setLengthFromOuterEdges(double lengthFromOuterEdges) {
-        this.lengthFromOuterEdges = lengthFromOuterEdges;
-    }
-
-    /**
-     * @return the caliber
-     */
-    public double getCaliber() {
-        return caliber;
-    }
-
-    /**
-     * @param caliber the caliber to set
-     */
-    public void setCaliber(double caliber) {
-        this.caliber = caliber;
+    public void setShots(int shots) {
+        this.shots = shots;
     }
 
 }
