@@ -103,7 +103,7 @@
         </script>
         
         <script type="text/javascript">
-        function calculateGroupSize(lengthFromOuterEdges, caliber, size, shots)
+        function calculateGroupSize(lengthFromOuterEdges, caliber, size, shots, date)
         {
             var temp = {"size": 0.0};
             if(size === "")
@@ -115,6 +115,7 @@
             }
 
             temp.shots = shots;
+            temp.date = date;
             
             return temp;
         }
@@ -126,8 +127,9 @@
         var lengthFromOuterEdges = getValue("lengthFromOuterEdges");
         var caliber = getValue("caliber");
         var shots = getValue("shots");
+        var date = getValue("timestamp");
         
-        var objectReturned = calculateGroupSize(lengthFromOuterEdges, caliber, size, shots);
+        var objectReturned = calculateGroupSize(lengthFromOuterEdges, caliber, size, shots, date);
         document.write("Calculated group size was: " + objectReturned.size);
            
         setCookie("davesCookie",JSON.stringify(objectReturned), 20000);
