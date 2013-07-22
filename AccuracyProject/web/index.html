@@ -7,30 +7,11 @@ and open the template in the editor.
     <head>
         <title>Accuracy Project Home Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-        <script language="JavaScript" src="ts_picker.js">
-
-        //Script by Denis Gritcyuk: tspicker@yahoo.com
-        //Submitted to JavaScript Kit (http://javascriptkit.com)
-        //Visit http://javascriptkit.com for this script
-
-        </script>
     </head>
     <body>               
-        <form name="CalcSize" action="response.jsp">           
-            Please fill out the following fields to add a group. <br>
-            Date: <input type="text" name="timestamp" value="">
-            <a href="javascript:show_calendar('document.CalcSize.timestamp', document.CalcSize.timestamp.value);">
-            <img src="cal.gif" width="16" height="16" border="0"></a><br>
-            
-            Number of shots in the group: <input type="text" name="shots" /><br>
-            Group size: <input type="text" name="size" /><br>
-          
-            OR<br>
-            
-            Length from outer edges of the farthest two shots: <input type="text" name="lengthFromOuterEdges" /> <br>
-            Caliber of the bullet, or diameter of the arrow: <input type="text" name="caliber" /><br>
-            <input type="submit" value="Add Group" />
+        <form name="PickUser" action="LoggedIn.jsp">                     
+            Please enter your user name: <input type="text" name="userName" /><br>
+            <input type="submit" value="submit" />
         </form>
     </body>
 </html>
