@@ -19,19 +19,22 @@
         </script>
         <script language="JavaScript" src="UserStorage.js">
         </script>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     </head>
-    <body>               
-        <form name="CalcSize" action="AddGroupPressed.jsp">           
+    <body>                       
             Please fill out the following fields to add a group. <br>
-            Date: <input type="text" name="timestamp" value="">
-            <a href="javascript:show_calendar('document.CalcSize.timestamp', document.CalcSize.timestamp.value);">
-            <img src="cal.gif" width="16" height="16" border="0"></a><br>
+            <form name="CalcSize" action="">
+                Date: <input type="text" id="timestamp" value="">
+                <a href="javascript:show_calendar('document.CalcSize.timestamp', document.CalcSize.timestamp.value);">
+                <img src="cal.gif" width="16" height="16" border="0"></a><br>
+            </form>
             
             Weapon Used:
-            <select id="selectWeapon" name="selectWeapon">
+            <select id="selectWeapon">
               <option>NONE</option>
             </select>
-            OR Add a new weapon <input type="text" name="weaponAdded" /><br>
+            OR Add a new weapon <input type="text" id="weaponAdded" /><br>
             
             <script type="text/javascript">
                 //populate the dropdown list
@@ -49,15 +52,83 @@
                 
             </script>
             
-            Distance from target: <input type="text" name="distance" /><br>
-            Number of shots in the group: <input type="text" name="shots" /><br>
-            Group size: <input type="text" name="size" /><br>
+            Distance from target: <input type="text" id="distance" /><br>
+            Number of shots in the group: <input type="text" id="shots" /><br>
+            Group size: <input type="text" id="size" /><br>
           
             OR<br>
             
-            Length from outer edges of the farthest two shots: <input type="text" name="lengthFromOuterEdges" /> <br>
-            Caliber of the bullet, or diameter of the arrow: <input type="text" name="caliber" /><br>
-            <input type="submit" value="Add Group" />
-        </form>
+            Length from outer edges of the farthest two shots: <input type="text" id="lengthFromOuterEdges" /> <br>
+            Caliber of the bullet, or diameter of the arrow: <input type="text" id="caliber" /><br>
+            <input type="submit" id="AddGroup" value="AddGroup" />
+       
+        
+        <script>
+            $("#AddGroup").click(function() {
+                var size = $("#size").val();
+                var lengthFromOuterEdges = $("#lengthFromOuterEdges").val();
+                var caliber = $("#caliber").val();
+                var shots = $("#shots").val();
+                var date = $("#timestamp").val();
+                var distance = $("#distance").val();
+                var weapon = $("#selectWeapon").val();
+                var weaponAdded = $("#weaponAdded").val();
+                weapon = whichWeapon(weapon, weaponAdded);
+
+                var objectReturned = calculateGroupSize(lengthFromOuterEdges, caliber, size, shots, date, distance);
+
+                var userName = localStorage["currentUser"];
+                if(!doesWeaponExist(userName, weapon))
+                {
+                    addWeapon(userName, weapon);
+                }
+                addGroup(userName, weapon, objectReturned);
+                
+                if($("#selectWeapon").val() === "NONE")
+                {
+                    var tempList = new Array();
+                    tempList[0] = weapon;
+                    var select = document.getElementById("selectWeapon"); 
+                    var options = tempList; 
+
+                    for(var i = 0; i < options.length; i++) 
+                    {
+                        var opt = options[i];
+                        var el = document.createElement("option");
+                        el.textContent = opt;
+                        el.value = opt;
+                        select.appendChild(el);
+                    }
+                }
+                alert("The group was added");
+              });
+          
+            function whichWeapon(weapon, weaponAdded)
+            {
+                if(weapon === "NONE")
+                {
+                    return weaponAdded;
+                }
+                return weapon;
+            }
+            
+            function calculateGroupSize(lengthFromOuterEdges, caliber, size, shots, date, distance, weapon)
+            {
+                var temp = {"size": 0.0};
+                if(size === "")
+                {
+                    temp.size = lengthFromOuterEdges - caliber;
+                }
+                else{
+                    temp.size = size;
+                }
+                temp.shots = shots;
+                temp.date = date;
+                temp.distance = distance;
+                temp.cleaned = false;
+
+                return temp;
+            }
+        </script>
     </body>
 </html>

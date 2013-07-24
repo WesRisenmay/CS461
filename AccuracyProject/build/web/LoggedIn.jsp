@@ -41,5 +41,9 @@
         <form name="AddGroup" action="AddGroup.jsp">                     
             <input type="submit" value="Add Group" />
         </form>
+        
+        <form name="WeaponMaintenance" action="Maintenance.jsp">                     
+            <input type="submit" value="WeaponMaintenance" />
+        </form>
     </body>
 </html>
