@@ -56,16 +56,33 @@
         
         <input type="submit" id="AddCleaningDate" value="AddCleaningDate" /><br>
 
-        Weapons needing cleaned (list)
-       
+        <br>
+        <h2>Weapons needing cleaned:</h2>
+        <ul id="needsCleaned">
+        </ul>
+
         
         <script>
+            var needsCleaned = checkWeapons(localStorage["currentUser"]);
+
+            $("#needsCleaned").empty();
+            for(var i = 0; i < needsCleaned.length; i++)
+            {
+                $("#needsCleaned").append(needsCleaned[i] + '<br>');
+            }
             $("#AddCleaningDate").click(function() {
-            var weaponName = $("#selectWeapon").val();
-            var newDate = $("#timestamp").val();
-            var preferredRounds = $("#cleaningCount").val();
-            addCleaning(localStorage["currentUser"], weaponName, newDate, preferredRounds);
-          });
+                var weaponName = $("#selectWeapon").val();
+                var newDate = $("#timestamp").val();
+                var preferredRounds = $("#cleaningCount").val();
+                addCleaning(localStorage["currentUser"], weaponName, newDate, preferredRounds);
+                var needsCleaned = checkWeapons(localStorage["currentUser"]);
+
+                $("#needsCleaned").empty();
+                for(var i = 0; i < needsCleaned.length; i++)
+                {
+                    $("#needsCleaned").append(needsCleaned[i] + '<br>');
+                }
+            });
         </script>
         
     </body>

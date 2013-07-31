@@ -105,12 +105,21 @@ function addGroup(userName, weaponName, group)
     
     var userLocation = getUserLocationInArray(userName);
     var weaponLocation;
+    var locationPlaced = 0;
     if(userLocation !== -1)
     {
         weaponLocation = getWeaponLocationInArray(userName, weaponName);
         if(weaponLocation !== -1)
-        {
-            storage.userList[userLocation].weaponList[weaponLocation].groupList.splice(storage.userList[userLocation].weaponList[weaponLocation].length, 0, group);
+        {           
+            for(var i = storage.userList[userLocation].weaponList[weaponLocation].groupList.length -1; i > -1; i--)
+            {
+                if(compareDates(storage.userList[userLocation].weaponList[weaponLocation].groupList[i].date, group.date) || storage.userList[userLocation].weaponList[weaponLocation].groupList[i].date === group.date)
+                {
+                    locationPlaced = i + 1;
+                    break;
+                }
+            }
+            storage.userList[userLocation].weaponList[weaponLocation].groupList.splice(locationPlaced, 0, group);
             storage.userList[userLocation].weaponList[weaponLocation].totalShots = parseInt(storage.userList[userLocation].weaponList[weaponLocation].totalShots) + parseInt(group.shots);
         }
     }
@@ -195,7 +204,7 @@ function compareDates(firstDate, secondDate)
     firstDate = firstDate.slice(firstDate.indexOf(":")+1, firstDate.length);
     first.seconds = parseInt(firstDate.substring(0,firstDate.length));
     
-    var firstDateObject = new Date(first.year, first.month, first.day, first.hours, first.minutes, first.seconds, 0);
+    var firstDateObject = new Date(first.year, first.month-1, first.day, first.hours, first.minutes, first.seconds, 0);
     firstDate = new String(secondDate);
     
     first.day = parseInt(firstDate.substring(0,firstDate.indexOf("-")));
@@ -214,6 +223,52 @@ function compareDates(firstDate, secondDate)
     var secondDateObject = new Date(first.year, first.month-1, first.day, first.hours, first.minutes, first.seconds, 0);
     
     return (secondDateObject > firstDateObject);    
+}
+
+function checkWeapons(userName)
+{
+    var storage = JSON.parse(localStorage["UserDatabase"]);
+    
+    var userLocation = getUserLocationInArray(userName);
+    var needsCleaned = new Array();
+    if(userLocation === -1)
+        return;
+    
+    for(var i=0; i < storage.userList[userLocation].weaponList.length; i++)
+    {
+        if(storage.userList[userLocation].weaponList[i].preferredRounds < storage.userList[userLocation].weaponList[i].totalShots)
+        {
+            needsCleaned.splice(0, 0, storage.userList[userLocation].weaponList[i].name);
+        }
+    }
+
+    localStorage["UserDatabase"] = JSON.stringify(storage);
+    
+    return needsCleaned;
+}
+
+function plotGroups(userName, weaponName)
+{
+    var storage = JSON.parse(localStorage["UserDatabase"]);
+    
+    var userLocation = getUserLocationInArray(userName);
+    if(userLocation === -1)
+        return;
+    var weaponLocation = getWeaponLocationInArray(userName, weaponName);
+    if(weaponLocation === -1)
+        return;
+    
+    var stringPlot = [];
+    //"[[" + "[" + "0" + "," + storage.userList[userLocation].weaponList[weaponLocation].groupList[0].size + "]";
+    
+    for(var i = 0; i < storage.userList[userLocation].weaponList[weaponLocation].groupList.length; i++)
+    {
+        stringPlot.push([i, storage.userList[userLocation].weaponList[weaponLocation].groupList[i].size]);
+    }
+    
+    //stringPlot += "]]";
+    
+    return stringPlot;
 }
 
 

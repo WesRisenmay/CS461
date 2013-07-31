@@ -19,6 +19,10 @@
         
         <script language="JavaScript" src="UserStorage.js">
         </script>
+        <script language="javascript" type="text/javascript" src="jquery.min.js"></script>
+        <script language="javascript" type="text/javascript" src="jquery.jqplot.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery.jqplot.css" />
+
     </head>
     <body>
         <script type="text/javascript">  
@@ -45,5 +49,14 @@
         <form name="WeaponMaintenance" action="Maintenance.jsp">                     
             <input type="submit" value="WeaponMaintenance" />
         </form>
+        
+        <div id="chartdiv" style="height:400px;width:300px; "></div>
+        
+        <script>
+            //$.jqplot('chartdiv',  [[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]);
+            //document.write(plotGroups(localStorage["currentUser"], ".243"));
+            $.jqplot('chartdiv',  [plotGroups(localStorage["currentUser"], ".243")]);
+            
+        </script>
     </body>
 </html>
