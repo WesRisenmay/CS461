@@ -21,39 +21,49 @@
         </script>
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        
+        <style>
+            div {
+                border-style: solid;
+                border-width: medium;
+                border-color: activeborder;
+            }
+        </style>
     </head>
     <body>                       
             Please fill out the following fields to add a group. <br>
-            <form name="CalcSize" action="">
-                Date: <input type="text" id="timestamp" value="">
-                <a href="javascript:show_calendar('document.CalcSize.timestamp', document.CalcSize.timestamp.value);">
-                <img src="cal.gif" width="16" height="16" border="0"></a><br>
-            </form>
-            
-            Weapon Used:
-            <select id="selectWeapon">
-              <option>NONE</option>
-            </select>
-            OR Add a new weapon <input type="text" id="weaponAdded" /><br>
-            
-            <script type="text/javascript">
-                //populate the dropdown list
-                var select = document.getElementById("selectWeapon"); 
-                var options = getWeaponListNames(localStorage["currentUser"]); 
+            <div>
+                <form name="CalcSize" action="">
+                    Date: <input type="text" id="timestamp" value="">
+                    <a href="javascript:show_calendar('document.CalcSize.timestamp', document.CalcSize.timestamp.value);">
+                    <img src="cal.gif" width="16" height="16" border="0"></a><br>
+                </form>
 
-                for(var i = 0; i < options.length; i++) 
-                {
-                    var opt = options[i];
-                    var el = document.createElement("option");
-                    el.textContent = opt;
-                    el.value = opt;
-                    select.appendChild(el);
-                }
-                
-            </script>
-            
-            Distance from target: <input type="text" id="distance" /><br>
-            Number of shots in the group: <input type="text" id="shots" /><br>
+                Weapon Used:
+                <select id="selectWeapon">
+                  <option>NONE</option>
+                </select>
+                OR Add a new weapon <input type="text" id="weaponAdded" /><br>
+
+                <script type="text/javascript">
+                    //populate the dropdown list
+                    var select = document.getElementById("selectWeapon"); 
+                    var options = getWeaponListNames(localStorage["currentUser"]); 
+
+                    for(var i = 0; i < options.length; i++) 
+                    {
+                        var opt = options[i];
+                        var el = document.createElement("option");
+                        el.textContent = opt;
+                        el.value = opt;
+                        select.appendChild(el);
+                    }
+
+                </script>
+
+                Distance from target: <input type="text" id="distance" /><br>
+                Number of shots in the group: <input type="text" id="shots" /><br>
+            </div>
             Group size: <input type="text" id="size" /><br>
           
             OR<br>
@@ -78,13 +88,14 @@
                 var objectReturned = calculateGroupSize(lengthFromOuterEdges, caliber, size, shots, date, distance);
 
                 var userName = localStorage["currentUser"];
-                if(!doesWeaponExist(userName, weapon))
+                var weaponExists = doesWeaponExist(userName, weapon)
+                if(!weaponExists)
                 {
                     addWeapon(userName, weapon);
                 }
                 addGroup(userName, weapon, objectReturned);
                 
-                if($("#selectWeapon").val() === "NONE")
+                if($("#selectWeapon").val() === "NONE" && !weaponExists)
                 {
                     var tempList = new Array();
                     tempList[0] = weapon;

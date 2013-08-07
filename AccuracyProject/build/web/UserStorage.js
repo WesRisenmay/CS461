@@ -8,6 +8,7 @@ function createDatabaseWithFirstUser(userName)
 {
     var storage = {"name": "storage"};
     storage.userList = new Array();
+    storage.animalList = new Array();
     localStorage["UserDatabase"] = JSON.stringify(storage);
     addUser(userName);
 }
@@ -247,23 +248,28 @@ function checkWeapons(userName)
     return needsCleaned;
 }
 
-function plotGroups(userName, weaponName)
+function plotGroups(userName)
 {
     var storage = JSON.parse(localStorage["UserDatabase"]);
     
     var userLocation = getUserLocationInArray(userName);
     if(userLocation === -1)
         return;
-    var weaponLocation = getWeaponLocationInArray(userName, weaponName);
-    if(weaponLocation === -1)
-        return;
+    //var weaponLocation = getWeaponLocationInArray(userName, weaponName);
+    //if(weaponLocation === -1)
+        //return;
     
     var stringPlot = [];
     //"[[" + "[" + "0" + "," + storage.userList[userLocation].weaponList[weaponLocation].groupList[0].size + "]";
     
-    for(var i = 0; i < storage.userList[userLocation].weaponList[weaponLocation].groupList.length; i++)
+    for(var i = 0; i < storage.userList[userLocation].weaponList.length; i++)
     {
-        stringPlot.push([i, storage.userList[userLocation].weaponList[weaponLocation].groupList[i].size]);
+        var tempPlot = [];
+        for(var j = 0; j < storage.userList[userLocation].weaponList[i].groupList.length; j++)
+        {
+            tempPlot.push([convertDate(storage.userList[userLocation].weaponList[i].groupList[j].date), storage.userList[userLocation].weaponList[i].groupList[j].size]);
+        }      
+        stringPlot.push(tempPlot);
     }
     
     //stringPlot += "]]";
@@ -271,6 +277,138 @@ function plotGroups(userName, weaponName)
     return stringPlot;
 }
 
+function convertDate(date) {
+    firstDate = new String(date);
+    var first = new Object();
+    first.day = parseInt(firstDate.substring(0,firstDate.indexOf("-")));
+    firstDate = firstDate.slice(firstDate.indexOf("-")+1, firstDate.length);
+    first.month = parseInt(firstDate.substring(0,firstDate.indexOf("-")));
+    firstDate = firstDate.slice(firstDate.indexOf("-")+1, firstDate.length);
+    first.year = parseInt(firstDate.substring(0,firstDate.indexOf(" ")));
+    firstDate = firstDate.slice(firstDate.indexOf(" ")+1, firstDate.length);
+    
+    first.hours = parseInt(firstDate.substring(0,firstDate.indexOf(":")));
+    firstDate = firstDate.slice(firstDate.indexOf(":")+1, firstDate.length);
+    first.minutes = parseInt(firstDate.substring(0,firstDate.indexOf(":")));
+    firstDate = firstDate.slice(firstDate.indexOf(":")+1, firstDate.length);
+    first.seconds = parseInt(firstDate.substring(0,firstDate.length));
+    
+    var firstDateObject = new Date(first.year, first.month-1, first.day, first.hours, first.minutes, first.seconds, 0);
+    
+    var dateStringReturned = "";
+    
+    dateStringReturned += firstDateObject.getDay() + "-"; 
+    
+    switch(firstDateObject.getMonth()) {
+        case 0:
+            dateStringReturned += "Jan";
+            break;
+        case 1:
+            dateStringReturned += "Feb";
+            break;
+        case 2:
+            dateStringReturned += "Mar";
+            break;
+        case 3:
+            dateStringReturned += "Apr";
+            break;
+        case 4:
+            dateStringReturned += "May";
+            break;
+        case 5:
+            dateStringReturned += "Jun";
+            break;
+        case 6:
+            dateStringReturned += "Jul";
+            break;
+        case 7:
+            dateStringReturned += "Aug";
+            break;
+        case 8:
+            dateStringReturned += "Sep";
+            break;
+        case 9:
+            dateStringReturned += "Oct";
+            break;
+        case 10:
+            dateStringReturned += "Nov";
+            break;
+        case 11:
+            dateStringReturned += "Dec";
+            break;   
+    }
+
+    dateStringReturned += "-" + (firstDateObject.getFullYear() % 100); 
+    
+    return dateStringReturned;
+}
+
+function AddAnimal(name, size) {
+    var storage = JSON.parse(localStorage["UserDatabase"]);
+    
+    if(DoesAnimalExist(name))
+    {
+        return false;
+    }
+    
+    var animal = {name: name,
+            size: size};
+    storage.animalList.splice(0, 0, animal);
+    
+    
+    localStorage["UserDatabase"] = JSON.stringify(storage);
+    return true;
+}
+
+function DoesAnimalExist(name) {
+    var storage = JSON.parse(localStorage["UserDatabase"]);
+    
+    for(var i = 0; i < storage.animalList.length; i++)
+    {
+        if(storage.animalList[i].name === name)
+            return true;
+    }
+    
+    return false;
+}
+
+function GetAnimalList(){
+    var storage = JSON.parse(localStorage["UserDatabase"]);
+    return storage.animalList;
+}
+
+function getAverageGroupSize(userName, weaponName) {
+    var storage = JSON.parse(localStorage["UserDatabase"]);
+    
+    var userLocation = getUserLocationInArray(userName);
+    if(userLocation === -1)
+        return -1;
+    
+    var weaponLocation = getWeaponLocationInArray(userName, weaponName);
+    if(weaponLocation === -1)
+        return -1;
+    
+    var count = 0;
+    var total = parseInt(0);
+    var distance = 0;
+    
+    for(var i = storage.userList[userLocation].weaponList[weaponLocation].groupList.length - 1; i > -1; i--)
+    {
+        count++;
+        
+        total = parseFloat(total) + parseFloat(storage.userList[userLocation].weaponList[weaponLocation].groupList[i].size);
+        distance = parseFloat(distance) + parseFloat(storage.userList[userLocation].weaponList[weaponLocation].groupList[i].distance);
+        if(count === 30)
+            break;
+    }
+    
+    var temp = {
+        avgSize: total/count,
+        distance: distance/count
+    };
+    
+    return temp;
+}
 
 
 
