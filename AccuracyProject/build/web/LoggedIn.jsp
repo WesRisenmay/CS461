@@ -110,7 +110,7 @@
                 
                 for(var i = 0; i < weaponListLength; i++)
                 {
-                    weaponSizes.splice(0, 0, getAverageGroupSize(userName, storage.userList[userLocation].weaponList[i].name));
+                    weaponSizes.splice(i, 0, getAverageGroupSize(userName, storage.userList[userLocation].weaponList[i].name));
                 }
                 
                 //populate first row with animals
