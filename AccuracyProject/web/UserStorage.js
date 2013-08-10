@@ -1,8 +1,9 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
+// Copyright © 2013 Wesley Risenmay
+// [This program is licensed under the GNU GPL]
+// Please see the file LICENSE in the source
+// distribution of this software for license terms.
+// Repo: https://github.com/WesRisenmay/CS461
+// Contact: wrr@pdx.edu
 
 function createDatabaseWithFirstUser(userName)
 {
