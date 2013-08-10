@@ -13,8 +13,11 @@ Users will be able to enter group sizes and animal vital sizes and find out what
 
 
 ##Install instructions:
-1. Download and install Netbeans
-6. Access the [application](http://localhost:8000/cmtool/) through your favorite browser ('http://localhost:8000/cmtool/' by default)!
+1. Download Java SE Development Kit from ('http://www.oracle.com/technetwork/java/javase/downloads/index.html')
+2. Download and install Netbeans Java EE from ('https://netbeans.org/downloads/') with the option GlassFish server install.
+3. Clone the repository
+4. In Netbeans, open the AccuracyProject project from the repository, and click run project.
+6. Open the line ('http://localhost:8080/AccuracyProject/') in your browser of choice.
 
 ##User instructions:
 1. Enter your name.
