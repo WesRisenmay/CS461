@@ -298,7 +298,7 @@ function convertDate(date) {
     
     var dateStringReturned = "";
     
-    dateStringReturned += firstDateObject.getDay() + "-"; 
+    dateStringReturned += firstDateObject.getDate() + "-"; 
     
     switch(firstDateObject.getMonth()) {
         case 0:

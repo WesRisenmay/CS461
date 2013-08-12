@@ -1,9 +1,9 @@
-// Copyright © 2013 Wesley Risenmay
-// [This program is licensed under the GNU GPL]
-// Please see the file LICENSE in the source
-// distribution of this software for license terms.
-// Repo: https://github.com/WesRisenmay/CS461
-// Contact: wrr@pdx.edu
+<!-- Copyright © 2013 Wesley Risenmay-->
+<!-- [This program is licensed under the GNU GPL]-->
+<!-- Please see the file LICENSE in the source-->
+<!-- distribution of this software for license terms.-->
+<!-- Repo: https://github.com/WesRisenmay/CS461-->
+<!-- Contact: wrr@pdx.edu-->
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
