@@ -75,6 +75,41 @@
        
         
         <script>
+            $("#AddGroup").attr('disabled','disabled');
+            
+            $("#size").on("change keyup blur", validateData);
+            $("#lengthFromOuterEdges").on("change keyup blur", validateData);
+            $("#caliber").on("change keyup blur", validateData);
+            $("#shots").on("change keyup blur", validateData);
+            $("#timestamp").on("change keyup blur", validateData);
+            $("#distance").on("change keyup blur", validateData);
+            $("#selectWeapon").on("change keyup blur", validateData);
+            $("#weaponAdded").on("change keyup blur", validateData);
+            
+            function validateData() {
+                var size = $("#size").val();
+                var lengthFromOuterEdges = $("#lengthFromOuterEdges").val();
+                var caliber = $("#caliber").val();
+                var shots = $("#shots").val();
+                var date = $("#timestamp").val();
+                var distance = $("#distance").val();
+                var weapon = $("#selectWeapon").val();
+                var weaponAdded = $("#weaponAdded").val();
+                
+                var doubleRegExp = new RegExp("[0-9]+[.]{0,1}[0-9]*");
+                var doubleRegExpNotRequired = new RegExp("[0-9]*[.]{0,1}[0-9]*");
+                var dateRegExp = new RegExp("[0-9]{1,2}[-][0-9]{1,2}[-][0-9]{4}[ ][0-9]{1,2}[:][0-9]{1,2}[:][0-9]{1,2}");
+                
+                //document.write(doubleRegExp.test(size) + doubleRegExp.test(lengthFromOuterEdges) +  doubleRegExp.test(caliber) + doubleRegExp.test(shots) + doubleRegExp.test(distance) + dateRegExp.test(timestamp));
+                if(doubleRegExp.test(size) && doubleRegExpNotRequired.test(lengthFromOuterEdges) && doubleRegExpNotRequired.test(caliber) && doubleRegExp.test(shots) && doubleRegExp.test(distance) && dateRegExp.test(date))
+                {
+                    $("#AddGroup").removeAttr('disabled');
+                }
+                else 
+                {
+                    $("#AddGroup").attr('disabled','disabled');
+                }
+            }
             $("#AddGroup").click(function() {
                 var size = $("#size").val();
                 var lengthFromOuterEdges = $("#lengthFromOuterEdges").val();
