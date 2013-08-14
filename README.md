@@ -8,7 +8,7 @@ Repo: https://github.com/WesRisenmay/CS461
 Contact: wrr@pdx.edu
 [LICENSE] (https://github.com/WesRisenmay/CS461/LICENSE)
 
-This application is meant to help hunters and shooters to track their progress regarding their accuracy.
+This web application is meant to help hunters and shooters to track their progress regarding their accuracy.
 Users will be able to enter group sizes and animal vital sizes and find out what distances they can trust themselves to shoot at animals.
 
 
